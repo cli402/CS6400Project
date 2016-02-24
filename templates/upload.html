@@ -1,0 +1,118 @@
+{% extends "layout1.html" %}
+{% block content %}
+
+
+<script>
+$(function() {
+    $.ajax({
+        url: '{{ url_for("autocomplete") }}'
+        }).done(function (data) {
+        	var day = data
+        	console.log(day)
+            $('#tags').autocomplete({
+                source: data.json_list
+            });
+        });
+    });
+</script> 
+    <script>
+        $(function () {
+            "use strict";
+            
+            $('#try-it').click(function (e) {
+                e.preventDefault();
+
+                $('.face').remove();
+
+                $('#picture').faceDetection({
+                    complete: function (faces) {
+                        console.log(faces);
+                        console.log('shit')
+                        for (var i = 0; i < faces.length; i++) {
+                            $('<div>', {
+                                'class':'face',
+                                'css': {
+                                    'position': 'absolute',
+                                    'left':     faces[i].x * faces[i].scaleX + 'px',
+                                    'top':      faces[i].y * faces[i].scaleY + 'px',
+                                    'width':    faces[i].width  * faces[i].scaleX + 'px',
+                                    'height':   faces[i].height * faces[i].scaleY + 'px'
+                                }
+                            })
+                            .insertAfter(this);
+                        }
+                    },
+                    error:function (code, message) {
+                        alert('Error: ' + message);
+                    }
+                });
+            });
+        });
+    </script>
+
+		<div id="header">
+			<div id="nav-wrapper"> 
+				<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li class="active"><a href="/">Homepage</a></li>
+						<li><a href="/content">Content</a></li>
+            			<li><a href="/tag">Tag</a></li>
+						<li><a href="/upload">Upload</a></li>
+						<li><a href="/report">Report</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="container"> 
+				
+				<!-- Logo -->
+				<div id="logo">
+                    <form method="post" accept=".PNG,.JEPG" name="submit" enctype="multipart/form-data">
+                 
+  <label class="myFile" style="width: 100%; margin: 0px auto;">
+  <img src="http://wscont1.apps.microsoft.com/winstore/1x/c37a9d99-6698-4339-acf3-c01daa75fb65/Icon.13385.png" alt="" />
+   <input type="file" name="file" onchange='this.form.submit();'>
+    </label>
+</form>
+<button type="button" class="btn btn-info btn-md">Upload Image</button>
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+{% if filename %} 
+	 <div class="picture-container">
+		<img id="picture",class = "picture" src = "{{filename}}" >
+	<div align="center">Pash:{{phash}}</div>
+    </div>
+    <div align="center">
+    <a id="try-it" href="#" >
+        <img class="button-try" src="../static/images/tag.jpg">
+    </a>
+</div>
+
+
+<div align="center">
+    <form method="post" action="upload_tag" enctype="multipart/form-data">
+  Tag: <input type="text" name="tag_name"><br>
+  phash: <input type="text" name="phash" value={{phash}}><br>
+  <input type="submit" value="Add tag">
+</form>
+
+    </div>
+    <br>
+
+{% endif %}
+
+
+{%if success%}
+<p>The pic has been successfully inserted</p>
+{%endif%}
+
+
+{% endblock %}
+
+

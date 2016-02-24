@@ -1,0 +1,66 @@
+{% extends "layout1.html" %}
+{% block content %}
+
+		<div id="header">
+			<div id="nav-wrapper"> 
+				<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li class="active"><a href="/">Homepage</a></li>
+						<li><a href="/content">Content</a></li>
+            			<li><a href="/tag">Tag</a></li>
+						<li><a href="/upload">Upload</a></li>
+						<li><a href="/report">Report</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="container"> 
+				
+				<!-- Logo -->
+				<div id="logo">
+					<h1><a href="#">Tagging </a></h1>
+                    <div class="ui-widget">
+ 
+  <form method="post" accept=".PNG,.JEPG" name="submit" enctype="multipart/form-data">
+  <input id="tags" type ='text' name ='textline' style="height:50px;font-size:20pt;width=600px;">
+  <input type="submit" value="Search" style = "font-size:14pt;">
+</form>
+</div>
+				</div>
+			</div>
+		</div>
+
+<div class="jumbotron" align="center">
+    <h2>CS6400 project</h2>
+    <h2>Tagging Based retrieval <small></small></h2>
+</div>
+
+
+{% if pic_exist %} 
+<div class="jumbotron">
+    <h3>The tag of the input is <button type="button" class="btn btn-primary btn-md">{{request_name}}</button></h3>
+    <div class="row col-lg-12">
+    {% for item in tagname %}
+    <div class="col-lg-4" >
+		<img src = "../{{item}}" width =400px height = 320px class="img-rounded"><br>
+        <div align="center">
+       <button type="button" class="btn btn-success btn-md">{{request_name}}</button>
+    </div>
+</div>
+    {%endfor%}
+</div><br>
+{%else%}
+{%if request_name%}
+<p>The requested tag {{request_name}}does not exist,you could try the following</p>
+{% endif %}
+</div>
+{%endif%}
+
+{%if tag%}
+<p>The tag of the input is {{tag}}</p>
+{%endif%}
+
+
+{% endblock %}
+
+
