@@ -9,9 +9,9 @@ To run the sever
 And open the page on the local broswer
 
 Needed dependency:
-```pip install pillow```
-```sudo pip install --allow-external mysql-connector-python mysql-connector-python```
-```to be continued```
+- ```pip install pillow```
+- ```sudo pip install --allow-external mysql-connector-python mysql-connector-python```
+- ```to be continued```
 
 ----------------------feature:
 >1. Automatic facial recognition for the uploaded image
